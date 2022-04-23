@@ -12,43 +12,48 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class EndpointController {
+public class ProductController {
 		
     Map<String, Integer> mydata = new HashMap<String, Integer>();
     
-    EndpointController()
+    ProductController()
 	{
-        this.mydata.put("adam", 20);
-        this.mydata.put("abbas", 57);
+        this.mydata.put("toothpaste", 5);
+        this.mydata.put("brush", 3);
 	}
 
-	@GetMapping("/hello/{name}")
-	public HttpStatus getAge(@PathVariable("name") String name)
+	@GetMapping("/product/{name}")
+	public Integer getAge(@PathVariable("name") String inputName)
 	{
-		System.out.println("Name: " + this.mydata.get(name) );
-        return HttpStatus.OK;
+		Integer loc = this.mydata.get(inputName);
 
+		if(loc == null){
+			return null;
+		}else{
+		System.out.println("Name: " + loc );
+        return loc;
+		}
 	}
 
-	@DeleteMapping("/hello/{name}")
-	public HttpStatus deleteName(@PathVariable("name") String name)
+	@DeleteMapping("/product/{name}")
+	public Map<String, Integer>  deleteName(@PathVariable("name") String name)
 	{
 		this.mydata.remove((name));
-		print();
-        return HttpStatus.OK;
+		printme();
+        return this.mydata;
 	}
 
-
-	@PostMapping("/hello")
-	public HttpStatus addName(@RequestBody String value)
+	@PostMapping("/product")
+	public Map<String, Integer> addName(@RequestBody String nameage)
 	{
-        String[] myvalues = value.split(":");
+        String[] myvalues = nameage.split(":");
+		System.out.println(myvalues.toString());
         this.mydata.put(myvalues[0], Integer.valueOf(myvalues[1]));
-        print();
-        return HttpStatus.CREATED;
+        printme();
+        return mydata;
 	}
 
-	void print()
+	void printme()
 	{
 		for (String key : this.mydata.keySet()) {
 			System.out.print(this.mydata.get(key));
