@@ -1,62 +1,36 @@
 package com.acacia.endpoint;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
+import com.acacia.models.Category;
+
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class CategoryController {
-		
-    Map<String, Integer> mydata = new HashMap<String, Integer>();
+public class CategoryController{
+
+    List<Category> catList = new ArrayList<Category>();
+    CategoryController(){
+        this.initilizeList();
+    }
+
+    void initilizeList(){
+		this.catList.add( new Category(1,"Tooth Pate"));
+		this.catList.add( new Category(2,"Mouthwash"));
+		this.catList.add( new Category(3,"Soap"));
+	}
     
-    CategoryController()
-	{
-        this.mydata.put("adam", 20);
-        this.mydata.put("abbas", 57);
-	}
-
-	@GetMapping("/hello/{name}")
-	public Integer getAge(@PathVariable("name") String inputName)
-	{
-		Integer loc = this.mydata.get(inputName);
-
-		if(loc == null){
-			return null;
-		}else{
-		System.out.println("Name: " + loc );
-        return loc;
-		}
-	}
-
-	@DeleteMapping("/hello/{name}")
-	public Map<String, Integer>  deleteName(@PathVariable("name") String name)
-	{
-		this.mydata.remove((name));
-		printme();
-        return this.mydata;
-	}
-
-	@PostMapping("/hello")
-	public Map<String, Integer> addName(@RequestBody String nameage)
-	{
-        String[] myvalues = nameage.split(":");
-		System.out.println(myvalues.toString());
-        this.mydata.put(myvalues[0], Integer.valueOf(myvalues[1]));
-        printme();
-        return mydata;
-	}
-
-	void printme()
-	{
-		for (String key : this.mydata.keySet()) {
-			System.out.print(this.mydata.get(key));
-		}
+    @RequestMapping(method = RequestMethod.GET,path = "/category/{id}")
+    public Category getCategory(@PathVariable("id") int inId ){ 
+        for (Category cat: this.catList){
+            if (cat.id == inId){
+                return cat;
+            }
+        }
+        return null;
     }
 }
-
