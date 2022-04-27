@@ -21,10 +21,10 @@ public class PhoneController {
     }
 
     void initializePhone(){
-        this.phoneList.add(new Phone(1, "", "", ""));
-        this.phoneList.add(new Phone(2, "", "", ""));
-        this.phoneList.add(new Phone(3, "", "", ""));
-        this.phoneList.add(new Phone(4, "", "", ""));
+        this.phoneList.add(new Phone(1, "Samsung", "A70", "Android"));
+        this.phoneList.add(new Phone(2, "iPhone12", "", ""));
+        this.phoneList.add(new Phone(3, "iPad", "Air", "Apple"));
+        this.phoneList.add(new Phone(4, "Huawei", "P70", "Android"));
 
     }
 
@@ -37,5 +37,16 @@ public class PhoneController {
         }
         return null;
     }
+
+    @RequestMapping(path = "", method=RequestMethod.GET)
+    Phone[] getallPhones(){
+         Phone[] result = new Phone[this.phoneList.size()];
+        int index = 0;
+         
+        for (Phone phone: this.phoneList){
+            result[index++] = phone;
+        }
+        return result;
+    }  
     
 } 
