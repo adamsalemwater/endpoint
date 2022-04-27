@@ -28,7 +28,7 @@ public class ProductController {
 	}
 
 	void initilizeList(){
-		this.productList.add( new Product(1,"Tooth Pate", 3.50));
+		this.productList.add( new Product(1,"Tooth Paste", 3.50));
 		this.productList.add( new Product(2,"Mouthwash", 4.00));
 		this.productList.add( new Product(3,"Soap", 2.50));
 	}
